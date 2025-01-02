@@ -1,0 +1,66 @@
+*,
+*::before,
+*::after 
+  box-sizing: border-box
+  margin: 0
+  padding: 0
+
+// Body setup
+body 
+  font-family: 'Arial', sans-serif
+  line-height: 1.5
+  background-color: #f5f5f5
+  color: #333
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+// Remove text decoration from links
+a 
+  text-decoration: none
+  color: inherit // Inherit color from parent elements
+
+// Reset list styles
+ul, ol 
+  list-style: none
+
+// Reset table styles
+table 
+  border-collapse: collapse
+  width: 100%
+
+// Set up block elements to take full width
+img, picture, video, iframe, object, embed 
+  max-width: 100%
+  height: auto
+  display: block
+
+// Set up buttons to have a consistent appearance
+button 
+  padding: 0
+  font-family: inherit
+  font-size: inherit
+  color: inherit
+  background: none
+  border: none
+  cursor: pointer
+
+
+// Make form inputs visually consistent
+input,
+select,
+textarea,
+button
+  font-family: inherit
+  font-size: inherit
+  color: inherit
+
+
+// Prevent user-select on text for better UX (optional)
+* 
+  user-select: none
+
+
+// Additional global styles
+html 
+  scroll-behavior: smooth// Enable smooth scrolling
+
