@@ -1,25 +1,13 @@
-import { useState } from "react";
-import "../styles/components/header.sass";
+import { Typography, AppBar, Toolbar } from "@mui/material";
 
-const Header = () => {
-  const [theme, setTheme] = useState("light"); // Default theme
-
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-
-    // Update the root element's class to apply the theme
-    document.documentElement.className = `${newTheme}-theme`;
-  };
-
-  return (
-    <header className="header">
-      <h1>Theme Toggle Example</h1>
-      <button onClick={toggleTheme}>
-        Switch to {theme === "light" ? "Dark" : "Light"} Mode
-      </button>
-    </header>
-  );
-};
+const Header = () => (
+  <AppBar position="static" color="default">
+    <Toolbar>
+      <Typography variant="h6" color="text.primary">
+        My Application
+      </Typography>
+    </Toolbar>
+  </AppBar>
+);
 
 export default Header;
