@@ -2,8 +2,6 @@ import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { lightTheme, darkTheme } from "./theme";
-/* import Register from "./components/Register";
-import Login from "./components/Login"; */
 import DashBoard from "./components/DashBoard";
 import "./main.sass";
 import ContrastIcon from "@mui/icons-material/Contrast";
