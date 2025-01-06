@@ -199,7 +199,7 @@ function DashBoard() {
       <Box
         component="main"
         sx={{
-          height: "95vh",
+          minHeight: "95vh",
           width: "50rem",
           margin: "1rem 2rem 0 0",
           flexGrow: 1,

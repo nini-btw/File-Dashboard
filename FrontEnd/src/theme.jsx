@@ -8,6 +8,7 @@ export const lightTheme = createTheme({
       default: "#fff", // Primary light background
       paper: "#f8f9fa", // Secondary light background
       accent: "#212529",
+      extra: "eee",
     },
     text: {
       primary: "#212529", // Primary light text
@@ -24,6 +25,7 @@ export const darkTheme = createTheme({
       default: "#212529", // Primary dark background
       paper: "#393d3f", // Secondary dark background
       accent: "#fff",
+      extra: "000",
     },
     text: {
       primary: "#fdfdff", // Primary dark text
