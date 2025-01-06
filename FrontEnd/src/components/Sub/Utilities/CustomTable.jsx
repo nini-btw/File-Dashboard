@@ -20,6 +20,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
 import { visuallyHidden } from "@mui/utils";
 
 function createData(id, fileName, uploadDate, by, viewCounts) {
@@ -78,6 +80,12 @@ const headCells = [
     disablePadding: false,
     label: "View Counts",
   },
+  {
+    id: "actions",
+    numeric: false,
+    disablePadding: false,
+    label: "Actions",
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -110,7 +118,7 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
+            align="center"
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
             sx={{}}
@@ -287,9 +295,7 @@ export default function CustomTable() {
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
                     role="checkbox"
-                    aria-checked={isItemSelected}
                     tabIndex={-1}
                     key={row.id}
                     selected={isItemSelected}
@@ -299,6 +305,7 @@ export default function CustomTable() {
                       <Checkbox
                         color="theme.pallet.background.accent"
                         checked={isItemSelected}
+                        onChange={(event) => handleClick(event, row.id)} // Move the logic to Checkbox
                         inputProps={{
                           "aria-labelledby": labelId,
                         }}
@@ -312,16 +319,33 @@ export default function CustomTable() {
                     >
                       {row.id}
                     </TableCell>
-                    <TableCell align="left">{row.fileName}</TableCell>
-                    <TableCell align="left">{row.uploadDate}</TableCell>
-                    <TableCell align="left">{row.by}</TableCell>
-                    <TableCell align="right">{row.viewCounts}</TableCell>
+                    <TableCell align="center">{row.fileName}</TableCell>
+                    <TableCell align="center">{row.uploadDate}</TableCell>
+                    <TableCell align="center">{row.by}</TableCell>
+                    <TableCell align="center">{row.viewCounts}</TableCell>
+                    <TableCell align="center">
+                      <Tooltip title="View">
+                        <IconButton sx={{ color: "grey" }}>
+                          <VisibilityIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Edit">
+                        <IconButton sx={{ color: "blue" }}>
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete">
+                        <IconButton sx={{ color: "red" }}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
                   </TableRow>
                 );
               })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={7} />
                 </TableRow>
               )}
             </TableBody>

@@ -1,10 +1,21 @@
+import { Box } from "@mui/material";
 import CustomTable from "../Utilities/CustomTable";
 
 function File() {
   return (
     <>
-      <h1>Files Management </h1>
-      <CustomTable />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "3rem",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h1>Files Management </h1>
+        <CustomTable />
+      </Box>
     </>
   );
 }
