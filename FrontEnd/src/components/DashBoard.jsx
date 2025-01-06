@@ -1,3 +1,9 @@
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import Box from "@mui/material/Box";
@@ -24,6 +30,7 @@ import File from "./Sub/DashBoard/File";
 import Profile from "./Sub/DashBoard/Profile";
 import Stat from "./Sub/DashBoard/Stat";
 import User from "./Sub/DashBoard/User";
+
 const drawerWidth = 150;
 
 const openedMixin = (theme) => ({
@@ -76,10 +83,11 @@ const Drawer = styled(MuiDrawer, {
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
 }));
-export default function DashBoard() {
+
+function DashBoard() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [activeComponent, setActiveComponent] = useState(<Home />);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [active, setActive] = useState("Home");
 
@@ -93,12 +101,13 @@ export default function DashBoard() {
 
   // List items configuration
   const listItems = [
-    { text: "Home", icon: <HomeIcon />, component: <Home /> },
-    { text: "Profile", icon: <PersonIcon />, component: <Profile /> },
-    { text: "Stats", icon: <BarChartIcon />, component: <Stat /> },
-    { text: "Files", icon: <InsertDriveFileIcon />, component: <File /> },
-    { text: "Users", icon: <EngineeringIcon />, component: <User /> },
+    { text: "Home", icon: <HomeIcon />, route: "/" },
+    { text: "Profile", icon: <PersonIcon />, route: "/profile" },
+    { text: "Stats", icon: <BarChartIcon />, route: "/stats" },
+    { text: "Files", icon: <InsertDriveFileIcon />, route: "/files" },
+    { text: "Users", icon: <EngineeringIcon />, route: "/users" },
   ];
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -136,8 +145,8 @@ export default function DashBoard() {
                 marginLeft: ".5rem",
               }}
               onClick={() => {
-                setActiveComponent(item.component);
                 setActive(item.text);
+                navigate(item.route); // Navigate to the route
               }}
             >
               <ListItemButton
@@ -200,8 +209,22 @@ export default function DashBoard() {
           borderRadius: "1.5rem",
         }}
       >
-        {activeComponent}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/stats" element={<Stat />} />
+          <Route path="/files" element={<File />} />
+          <Route path="/users" element={<User />} />
+        </Routes>
       </Box>
     </Box>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <DashBoard />
+    </Router>
   );
 }
