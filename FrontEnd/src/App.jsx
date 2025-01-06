@@ -20,8 +20,8 @@ const App = () => {
         onClick={toggleTheme}
         sx={{
           position: "absolute",
-          top: "0",
-          right: "0",
+          top: ".5rem",
+          right: ".5rem",
           backgroundColor: "transparent",
           color: "inherit",
           zIndex: "1003",
