@@ -11,8 +11,8 @@ import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+/* import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch"; */
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
@@ -40,7 +40,7 @@ export default function CustomTable({ rows, headCells }) {
   const [orderBy, setOrderBy] = React.useState(headCells[0]?.id || "");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  /* const [dense, setDense] = React.useState(true); */
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event, property) => {
@@ -86,9 +86,9 @@ export default function CustomTable({ rows, headCells }) {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
+  /*   const handleChangeDense = (event) => {
     setDense(event.target.checked);
-  };
+  }; */
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -115,7 +115,8 @@ export default function CustomTable({ rows, headCells }) {
           <Table
             sx={{ minWidth: "5rem" }}
             aria-labelledby="tableTitle"
-            size={dense ? "small" : "medium"}
+            /* size={dense ? "small" : "medium"} */
+            size="small"
           >
             <EnhancedTableHead
               headCells={headCells} // Pass headCells as a prop
@@ -151,7 +152,7 @@ export default function CustomTable({ rows, headCells }) {
                       />
                     </TableCell>
                     {headCells.slice(0, headCells.length - 1).map((cell) => (
-                      <TableCell key={cell.id} align={cell.align || "left"}>
+                      <TableCell key={cell.id} align="center">
                         {getCellValue(row, cell.id)}
                       </TableCell>
                     ))}
@@ -177,7 +178,8 @@ export default function CustomTable({ rows, headCells }) {
                 );
               })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                /*  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}> */
+                <TableRow style={{ height: 33 * emptyRows }}>
                   <TableCell colSpan={headCells.length + 2} />
                 </TableRow>
               )}
@@ -194,10 +196,10 @@ export default function CustomTable({ rows, headCells }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
+      {/* <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
-      />
+      /> */}
     </Box>
   );
 }

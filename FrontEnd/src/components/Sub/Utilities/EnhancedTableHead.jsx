@@ -23,7 +23,11 @@ export default function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead>
+    <TableHead
+      sx={{
+        backgroundColor: (theme) => theme.palette.background.extra,
+      }}
+    >
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
@@ -38,8 +42,9 @@ export default function EnhancedTableHead(props) {
           <TableCell
             key={headCell.id}
             align="center"
-            padding={headCell.disablePadding ? "none" : "normal"}
+            padding={headCell.disablePadding ? "none" : ""}
             sortDirection={orderBy === headCell.id ? order : false}
+            sx={{ padding: "1rem" }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
