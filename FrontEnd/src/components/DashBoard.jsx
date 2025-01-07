@@ -20,14 +20,12 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useMediaQuery } from "@mui/material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
-import PersonIcon from "@mui/icons-material/Person";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import HomeIcon from "@mui/icons-material/Home";
 
 import Home from "./Sub/DashBoard/Home";
 import File from "./Sub/DashBoard/File";
-import Profile from "./Sub/DashBoard/Profile";
 import Stat from "./Sub/DashBoard/Stat";
 import User from "./Sub/DashBoard/User";
 
@@ -102,7 +100,6 @@ function DashBoard() {
   // List items configuration
   const listItems = [
     { text: "Home", icon: <HomeIcon />, route: "/" },
-    { text: "Profile", icon: <PersonIcon />, route: "/profile" },
     { text: "Stats", icon: <BarChartIcon />, route: "/stats" },
     { text: "Files", icon: <InsertDriveFileIcon />, route: "/files" },
     { text: "Users", icon: <EngineeringIcon />, route: "/users" },
@@ -211,7 +208,6 @@ function DashBoard() {
       >
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/stats" element={<Stat />} />
           <Route path="/files" element={<File />} />
           <Route path="/users" element={<User />} />
