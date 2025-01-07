@@ -6,10 +6,8 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
@@ -22,31 +20,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
-import { visuallyHidden } from "@mui/utils";
-
-function createData(id, fileName, uploadDate, by, viewCounts) {
-  return {
-    id,
-    fileName,
-    uploadDate,
-    by,
-    viewCounts,
-  };
-}
-
-const rows = [
-  createData(1, "File_1", "01_11_2002", "admin_1", 67),
-  createData(2, "File_2", "02_22_2002", "admin_2", 45),
-  createData(3, "File_3", "03_33_2002", "admin_3", 74),
-  createData(4, "File_4", "04_4_2002", "admin_4", 47),
-  createData(5, "File_5", "05_51_2002", "admin51", 61),
-  createData(6, "File_6", "06_61_2002", "admin61", 71),
-  createData(7, "File_7", "07_71_2002", "admin71", 9),
-  createData(8, "File_8", "08_81_2002", "admin81", 34),
-  createData(9, "File_9", "09_91_2002", "admin91", 43),
-  createData(10, "File_10", "010_101_2002", "admin_51", 90),
-  createData(11, "File_11", "01_111_12002", "admin_91", 33),
-];
+import EnhancedTableHead from "./EnhancedTableHead"; // Update the path as needed
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -63,93 +37,6 @@ function getComparator(order, orderBy) {
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
-
-const headCells = [
-  { id: "id", numeric: false, disablePadding: true, label: "ID" },
-  { id: "fileName", numeric: false, disablePadding: false, label: "File Name" },
-  {
-    id: "uploadDate",
-    numeric: false,
-    disablePadding: false,
-    label: "Upload Date",
-  },
-  { id: "by", numeric: false, disablePadding: false, label: "Uploaded By" },
-  {
-    id: "viewCounts",
-    numeric: true,
-    disablePadding: false,
-    label: "View Counts",
-  },
-  {
-    id: "actions",
-    numeric: false,
-    disablePadding: false,
-    label: "Actions",
-  },
-];
-
-function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="theme.pallet.background.accent"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select all desserts",
-            }}
-          />
-        </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align="center"
-            padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
-            sx={{}}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
 
 function EnhancedTableToolbar(props) {
   const { numSelected } = props;
@@ -202,7 +89,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function CustomTable() {
+export default function CustomTable({ rows, headCells }) {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
@@ -266,7 +153,7 @@ export default function CustomTable() {
       [...rows]
         .sort(getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [order, orderBy, page, rowsPerPage]
+    [order, orderBy, page, rows, rowsPerPage]
   );
 
   return (
@@ -280,6 +167,7 @@ export default function CustomTable() {
             size={dense ? "small" : "medium"}
           >
             <EnhancedTableHead
+              headCells={headCells} // Pass headCells as a prop
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -368,3 +256,13 @@ export default function CustomTable() {
     </Box>
   );
 }
+CustomTable.propTypes = {
+  rows: PropTypes.arrayOf(PropTypes.object).isRequired,
+  headCells: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired, // Key to map row data
+      label: PropTypes.string.isRequired, // Column label
+      align: PropTypes.oneOf(["left", "right", "center"]), // Text alignment
+    })
+  ).isRequired,
+};
