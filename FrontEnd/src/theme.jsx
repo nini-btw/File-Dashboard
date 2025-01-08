@@ -15,6 +15,10 @@ export const lightTheme = createTheme({
       secondary: "#393d3f", // Secondary light text
       accent: "#fdfdff",
     },
+    button: {
+      up: "#c1f6d2",
+      down: "#f78395",
+    },
   },
 });
 
@@ -31,6 +35,10 @@ export const darkTheme = createTheme({
       primary: "#fdfdff", // Primary dark text
       secondary: "#f8f9fa", // Secondary dark text
       accent: "#212529",
+    },
+    button: {
+      up: "#0b240a",
+      down: "#411515",
     },
   },
 });
