@@ -6,13 +6,14 @@ import CountUp from "react-countup";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import { useState, useEffect } from "react";
+import { CustomPieChart } from "../Utilities/CustomPieChart";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   boxShadow: 3,
   borderRadius: "1rem",
   padding: "1rem",
-  height: "28vh",
+  minHeight: "28vh",
 }));
 
 export default function Stat() {
@@ -127,17 +128,52 @@ export default function Stat() {
               </Typography>
             </StyledCard>
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <StyledCard>3</StyledCard>
+          <Grid size={{ xs: 6, md: 3 }}>
+            <StyledCard
+              sx={{
+                display: "grid",
+                placeItems: "center",
+              }}
+            >
+              <Typography
+                variant="h4"
+                sx={{
+                  color: (theme) => theme.palette.text.primary,
+                }}
+              >
+                Users Counts
+              </Typography>
+              <Typography
+                variant="h4"
+                sx={{
+                  color: (theme) => theme.palette.text.secondary,
+                  backgroundColor: (theme) => theme.palette.background.paper,
+                  padding: ".5rem 2rem",
+                  borderRadius: ".5rem",
+                }}
+              >
+                <CountUp start={0} end={57} duration={3} />
+              </Typography>
+            </StyledCard>
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <StyledCard>4</StyledCard>
-          </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <StyledCard>5</StyledCard>
-          </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <StyledCard>6</StyledCard>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }}>
+            <StyledCard
+              sx={{
+                display: "grid",
+                placeItems: "center",
+                height: "54vh",
+              }}
+            >
+              <Typography
+                variant="h4"
+                sx={{
+                  color: (theme) => theme.palette.text.primary,
+                }}
+              >
+                Files Type
+              </Typography>
+              <CustomPieChart />
+            </StyledCard>
           </Grid>
         </Grid>
       </Box>
