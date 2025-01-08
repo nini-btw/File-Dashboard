@@ -14,6 +14,13 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import CustomSearchBar from "../Utilities/CustomSearchBar";
 import { SitemarkIcon } from "../Registration/CustomIcons";
 import { useTheme } from "@mui/material/styles";
+import { Link } from "react-router-dom";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import CancelIcon from "@mui/icons-material/Cancel";
+import Select from "@mui/material/Select";
+import { useState } from "react";
+import { Typography } from "@mui/material";
+import { MenuItem as DropdownItem } from "@mui/material";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -34,9 +41,33 @@ export default function CustomNavBar() {
   const theme = useTheme(); // Access the current theme
   const strokeColor = theme.palette.mode === "dark" ? "#fff" : "#000";
 
+  const [filtersVisible, setFiltersVisible] = useState(false);
+  const [filters, setFilters] = useState({
+    year: "",
+    type: "",
+    faculty: "",
+  });
+
+  const handleToggleFilters = () => {
+    setFiltersVisible((prev) => !prev);
+  };
+
+  const handleFilterChange = (filterType) => (event) => {
+    setFilters((prev) => ({
+      ...prev,
+      [filterType]: event.target.value,
+    }));
+  };
+
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+
+  const filtersList = [
+    { name: "Year", values: ["2020", "2021", "2022", "2023"] },
+    { name: "Type", values: ["Academic", "Non-Academic"] },
+    { name: "Faculty", values: ["Engineering", "Arts", "Business"] },
+  ];
 
   return (
     <AppBar
@@ -62,17 +93,69 @@ export default function CustomNavBar() {
             <SitemarkIcon strokeColor={strokeColor} />
             <CustomSearchBar />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <Button
-                variant="text"
+              <IconButton
                 size="small"
+                onClick={handleToggleFilters}
                 sx={{
                   color: (theme) => theme.palette.text.primary,
                   backgroundColor: (theme) => theme.palette.background.paper,
                 }}
               >
-                Filter
-              </Button>
+                {filtersVisible ? <CancelIcon /> : <FilterListIcon />}
+              </IconButton>
             </Box>
+            {filtersVisible && (
+              <Box
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                  gap: 2,
+                  alignItems: "center",
+                  ml: { md: "2rem", lg: "5rem" },
+                }}
+              >
+                {/* Filter by Year */}
+                <Select
+                  value={filters.year}
+                  onChange={handleFilterChange("year")}
+                  displayEmpty
+                  size="small"
+                  sx={{ width: 100 }}
+                >
+                  <MenuItem value="">Year</MenuItem>
+                  <MenuItem value="2023">2023</MenuItem>
+                  <MenuItem value="2024">2024</MenuItem>
+                  <MenuItem value="2025">2025</MenuItem>
+                </Select>
+
+                {/* Filter by Type */}
+                <Select
+                  value={filters.type}
+                  onChange={handleFilterChange("type")}
+                  displayEmpty
+                  size="small"
+                  sx={{ width: 100 }}
+                >
+                  <MenuItem value="">Type</MenuItem>
+                  <MenuItem value="exam">Exam</MenuItem>
+                  <MenuItem value="assignment">Assignment</MenuItem>
+                  <MenuItem value="project">Project</MenuItem>
+                </Select>
+
+                {/* Filter by Faculty */}
+                <Select
+                  value={filters.faculty}
+                  onChange={handleFilterChange("faculty")}
+                  displayEmpty
+                  size="small"
+                  sx={{ width: 100 }}
+                >
+                  <MenuItem value="">Faculty</MenuItem>
+                  <MenuItem value="science">Science</MenuItem>
+                  <MenuItem value="arts">Arts</MenuItem>
+                  <MenuItem value="commerce">Commerce</MenuItem>
+                </Select>
+              </Box>
+            )}
           </Box>
           <Box
             sx={{
@@ -81,26 +164,30 @@ export default function CustomNavBar() {
               alignItems: "center",
             }}
           >
-            <Button
-              variant="text"
-              size="small"
-              sx={{
-                color: (theme) => theme.palette.text.primary,
-                backgroundColor: (theme) => theme.palette.background.paper,
-              }}
-            >
-              Sign in
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              sx={{
-                backgroundColor: (theme) => theme.palette.background.accent,
-                color: (theme) => theme.palette.text.accent,
-              }}
-            >
-              Sign up
-            </Button>
+            <Link to="/signIn">
+              <Button
+                variant="text"
+                size="small"
+                sx={{
+                  color: (theme) => theme.palette.text.primary,
+                  backgroundColor: (theme) => theme.palette.background.paper,
+                }}
+              >
+                Sign in
+              </Button>
+            </Link>
+            <Link to="signUp">
+              <Button
+                variant="contained"
+                size="small"
+                sx={{
+                  backgroundColor: (theme) => theme.palette.background.accent,
+                  color: (theme) => theme.palette.text.accent,
+                }}
+              >
+                Sign up
+              </Button>
+            </Link>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" }, gap: 1 }}>
             <IconButton aria-label="Menu button" onClick={toggleDrawer(true)}>
@@ -127,34 +214,73 @@ export default function CustomNavBar() {
                     <CloseRoundedIcon />
                   </IconButton>
                 </Box>
-                <MenuItem>FILTER</MenuItem>
+                <MenuItem onClick={handleToggleFilters}>FILTER</MenuItem>
                 <Divider sx={{ my: 3 }} />
+                {filtersVisible && (
+                  <Box sx={{ mt: 3 }}>
+                    {filtersList.map((filter, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          mb: 2,
+                        }}
+                      >
+                        <Typography>{filter.name}</Typography>
+                        <Select
+                          value={filters[filter.name.toLowerCase()]}
+                          onChange={handleFilterChange(
+                            filter.name.toLowerCase()
+                          )}
+                          sx={{ width: "50%" }}
+                        >
+                          {filter.values.map((value, idx) => (
+                            <DropdownItem key={idx} value={value}>
+                              {value}
+                            </DropdownItem>
+                          ))}
+                        </Select>
+                      </Box>
+                    ))}
+                  </Box>
+                )}
+
                 <MenuItem>
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    sx={{
-                      backgroundColor: (theme) =>
-                        theme.palette.background.accent,
-                      color: (theme) => theme.palette.text.accent,
-                    }}
-                  >
-                    Sign up
-                  </Button>
+                  <Box sx={{ width: "100%" }}>
+                    <Link to="signUp">
+                      <Button
+                        variant="contained"
+                        fullWidth
+                        sx={{
+                          backgroundColor: (theme) =>
+                            theme.palette.background.accent,
+                          color: (theme) => theme.palette.text.accent,
+                        }}
+                      >
+                        Sign up
+                      </Button>
+                    </Link>
+                  </Box>
                 </MenuItem>
                 <MenuItem>
-                  <Button
-                    variant="contained"
-                    borderColor="theme.pallete.background.accent"
-                    fullWidth
-                    sx={{
-                      color: (theme) => theme.palette.text.primary,
-                      backgroundColor: (theme) =>
-                        theme.palette.background.paper,
-                    }}
-                  >
-                    Sign in
-                  </Button>
+                  <Box sx={{ width: "100%" }}>
+                    <Link to="/signIn">
+                      <Button
+                        variant="contained"
+                        borderColor="theme.pallete.background.accent"
+                        fullWidth
+                        sx={{
+                          color: (theme) => theme.palette.text.primary,
+                          backgroundColor: (theme) =>
+                            theme.palette.background.paper,
+                        }}
+                      >
+                        Sign in
+                      </Button>
+                    </Link>
+                  </Box>
                 </MenuItem>
               </Box>
             </Drawer>

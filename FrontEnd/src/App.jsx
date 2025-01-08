@@ -6,6 +6,9 @@ import "./main.sass";
 import ContrastIcon from "@mui/icons-material/Contrast";
 import { Box } from "@mui/material";
 import UserInterface from "./components/Main/UserInterface";
+import { Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -31,7 +34,11 @@ const App = () => {
         <ContrastIcon />
       </Box>
       {/* Main Components */}
-      <UserInterface />
+      <Routes>
+        <Route path="/" element={<UserInterface />}></Route>
+        <Route path="/signIn" element={<Login />}></Route>
+        <Route path="/signUp" element={<Register />}></Route>
+      </Routes>
     </ThemeProvider>
   );
 };

@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
-import { SitemarkIcon } from "./Sub/CustomIcons";
+import { SitemarkIcon } from "./Sub/Registration/CustomIcons";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 
