@@ -7,6 +7,8 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import { useState, useEffect } from "react";
 import { CustomPieChart } from "../Utilities/CustomPieChart";
+import { Circle } from "../Utilities/Circle";
+import { CustomLineChart } from "../Utilities/CustomLineChart";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -161,7 +163,7 @@ export default function Stat() {
               sx={{
                 display: "grid",
                 placeItems: "center",
-                height: "54vh",
+                height: "59vh",
               }}
             >
               <Typography
@@ -173,6 +175,44 @@ export default function Stat() {
                 Files Type
               </Typography>
               <CustomPieChart />
+            </StyledCard>
+          </Grid>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }}>
+            <StyledCard
+              sx={{
+                display: "grid",
+                placeItems: "center",
+                height: "59vh",
+              }}
+            >
+              <Typography
+                variant="h4"
+                sx={{
+                  color: (theme) => theme.palette.text.primary,
+                }}
+              >
+                Monthly Activity
+              </Typography>
+              <CustomLineChart />
+            </StyledCard>
+          </Grid>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }}>
+            <StyledCard
+              sx={{
+                display: "grid",
+                placeItems: "center",
+                height: "59vh",
+              }}
+            >
+              <Typography
+                variant="h4"
+                sx={{
+                  color: (theme) => theme.palette.text.primary,
+                }}
+              >
+                Files Type
+              </Typography>
+              <Circle />
             </StyledCard>
           </Grid>
         </Grid>
