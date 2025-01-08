@@ -2,10 +2,10 @@ import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { lightTheme, darkTheme } from "./theme";
-import DashBoard from "./components/DashBoard";
 import "./main.sass";
 import ContrastIcon from "@mui/icons-material/Contrast";
 import { Box } from "@mui/material";
+import UserInterface from "./components/Main/UserInterface";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -31,7 +31,7 @@ const App = () => {
         <ContrastIcon />
       </Box>
       {/* Main Components */}
-      <DashBoard />
+      <UserInterface />
     </ThemeProvider>
   );
 };
