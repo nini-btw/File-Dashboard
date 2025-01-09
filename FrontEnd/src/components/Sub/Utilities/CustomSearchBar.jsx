@@ -1,6 +1,6 @@
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
-import { alpha, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
@@ -28,10 +28,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  borderRadius: "1rem",
+  border: `2px solid ${theme.palette.background.extra}`,
+  backgroundColor: theme.palette.background.default,
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: theme.palette.background.default,
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
