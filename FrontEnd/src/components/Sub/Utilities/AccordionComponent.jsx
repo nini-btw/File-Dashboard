@@ -18,7 +18,6 @@ export default function AccordionComponent({ title }) {
 
   const accordionData = [
     [
-      "Element 1",
       "Element 2.pdf",
       "Element 3.docx",
       "Element 15.pdf",
@@ -32,7 +31,7 @@ export default function AccordionComponent({ title }) {
 
   return (
     <Box sx={{ mt: "2rem" }}>
-      <Accordion sx={{ width: "73vw" }}>
+      <Accordion sx={{ width: { sm: "80vw", md: "20vw" } }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -40,7 +39,7 @@ export default function AccordionComponent({ title }) {
         >
           <Typography>{title}</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ padding: "0" }}>
           <List sx={{ width: "100%" }}>
             {accordionData[0].map((element, index) => {
               const isWord = element.toLowerCase().endsWith(".docx");
@@ -54,6 +53,10 @@ export default function AccordionComponent({ title }) {
                     width: "100%", // Make sure each item takes full width
                     display: "flex",
                     justifyContent: "space-between",
+                    "&:hover": {
+                      cursor: "pointer",
+                      backgroundColor: theme.palette.background.default,
+                    },
                   }}
                 >
                   <Typography>{element}</Typography>

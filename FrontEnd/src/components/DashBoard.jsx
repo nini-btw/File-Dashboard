@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import Box from "@mui/material/Box";
@@ -21,15 +16,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useMediaQuery } from "@mui/material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import EngineeringIcon from "@mui/icons-material/Engineering";
-import BarChartIcon from "@mui/icons-material/BarChart";
 import HomeIcon from "@mui/icons-material/Home";
-
-import Home from "./Sub/DashBoard/Home";
-import File from "./Sub/DashBoard/File";
-import Stat from "./Sub/DashBoard/Stat";
-import User from "./Sub/DashBoard/User";
-
-const drawerWidth = 150;
+import { Outlet, useLocation } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+const drawerWidth = 170;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -83,11 +73,12 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 function DashBoard() {
+  let location = useLocation().pathname.split("/").pop().toString();
   const theme = useTheme();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const [active, setActive] = useState("Home");
+  const [active, setActive] = useState(location);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -99,10 +90,10 @@ function DashBoard() {
 
   // List items configuration
   const listItems = [
-    { text: "Home", icon: <HomeIcon />, route: "/" },
-    { text: "Stats", icon: <BarChartIcon />, route: "/stats" },
-    { text: "Files", icon: <InsertDriveFileIcon />, route: "/files" },
-    { text: "Users", icon: <EngineeringIcon />, route: "/users" },
+    { text: "dashboard", icon: <HomeIcon />, route: "/dashboard" },
+    { text: "files", icon: <InsertDriveFileIcon />, route: "/dashboard/files" },
+    { text: "users", icon: <EngineeringIcon />, route: "/dashboard/users" },
+    { text: "home", icon: <ArrowBackIcon />, route: "/" },
   ];
 
   return (
@@ -206,21 +197,12 @@ function DashBoard() {
           borderRadius: "1.5rem",
         }}
       >
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/stats" element={<Stat />} />
-          <Route path="/files" element={<File />} />
-          <Route path="/users" element={<User />} />
-        </Routes>
+        <Outlet />
       </Box>
     </Box>
   );
 }
 
 export default function App() {
-  return (
-    <Router>
-      <DashBoard />
-    </Router>
-  );
+  return <DashBoard />;
 }

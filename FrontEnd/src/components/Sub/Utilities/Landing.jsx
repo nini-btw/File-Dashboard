@@ -14,7 +14,9 @@ export default function Landing() {
               display: "flex",
               justifyContent: "center",
               mb: "4rem",
-              flexDirection: "column",
+              flexDirection: { sm: "column", md: "row" },
+              alignItems: { sm: "center", md: "start" },
+              gap: "2rem",
             }}
           >
             <AccordionComponent title="TD" />

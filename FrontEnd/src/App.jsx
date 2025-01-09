@@ -9,6 +9,10 @@ import UserInterface from "./components/Main/UserInterface";
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Dashboard from "./components/DashBoard";
+import File from "./components/Sub/DashBoard/File";
+import Stat from "./components/Sub/DashBoard/Stat";
+import User from "./components/Sub/DashBoard/User";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -35,9 +39,14 @@ const App = () => {
       </Box>
       {/* Main Components */}
       <Routes>
-        <Route path="/" element={<UserInterface />}></Route>
-        <Route path="/signIn" element={<Login />}></Route>
-        <Route path="/signUp" element={<Register />}></Route>
+        <Route path="/" element={<UserInterface />} />
+        <Route path="/signIn" element={<Login />} />
+        <Route path="/signUp" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="" element={<Stat />} />
+          <Route path="files" element={<File />} />
+          <Route path="users" element={<User />} />
+        </Route>
       </Routes>
     </ThemeProvider>
   );
