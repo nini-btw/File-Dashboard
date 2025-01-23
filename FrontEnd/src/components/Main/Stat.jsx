@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2"; // Import Grid2
 import { Card, Typography } from "@mui/material";
@@ -5,10 +6,10 @@ import { styled } from "@mui/system";
 import CountUp from "react-countup";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
-import { useState, useEffect } from "react";
-import { CustomPieChart } from "../Utilities/CustomPieChart";
-import { Circle } from "../Utilities/Circle";
-import { CustomLineChart } from "../Utilities/CustomLineChart";
+//sub components
+import { CustomPieChart } from "../Sub/DashBoard/CustomPieChart";
+import { Circle } from "../Sub/DashBoard/Circle";
+import { CustomLineChart } from "../Sub/DashBoard/CustomLineChart";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,

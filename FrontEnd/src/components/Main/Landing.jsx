@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from "@mui/material";
-import AccordionComponent from "./AccordionComponent";
+import AccordionComponent from "../Sub/Home/AccordionComponent";
 export default function Landing() {
   return (
     <>

@@ -1,4 +1,4 @@
-import CustomNavBar from "../Sub/Utilities/CustomNavBar";
+import CustomNavBar from "../Main/CustomNavBar";
 import { Outlet } from "react-router-dom";
 
 export default function UserInterface() {

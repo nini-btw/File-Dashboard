@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import CustomTable from "../Utilities/CustomTable";
+import CustomTable from "../Sub/DashBoard/CustomTable";
 
 function createData(id, fileName, uploadDate, by, viewCounts) {
   return {

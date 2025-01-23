@@ -12,8 +12,8 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
-import ForgotPassword from "./Sub/Registration/ForgotPassword";
-import { SitemarkIcon } from "./Sub/Registration/CustomIcons";
+import ForgotPassword from "../Sub/Registration/ForgotPassword";
+import { SitemarkIcon } from "../Sub/Registration/CustomIcons";
 import { useTheme } from "@mui/material/styles";
 
 const Card = styled(MuiCard)(({ theme }) => ({

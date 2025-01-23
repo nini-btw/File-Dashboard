@@ -1,20 +1,23 @@
 import { useState } from "react";
-import { ThemeProvider } from "@mui/material/styles";
+import { Routes, Route } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
 import { lightTheme, darkTheme } from "./theme";
-import "./main.sass";
 import ContrastIcon from "@mui/icons-material/Contrast";
 import { Box } from "@mui/material";
-import UserInterface from "./components/Main/UserInterface";
-import { Routes, Route } from "react-router-dom";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Dashboard from "./components/DashBoard";
-import File from "./components/Sub/DashBoard/File";
-import Stat from "./components/Sub/DashBoard/Stat";
-import User from "./components/Sub/DashBoard/User";
-import FilePreview from "./components/Main/FilePreview";
-import Landing from "./components/Sub/Utilities/Landing";
+import "./main.sass";
+
+//components
+import UserInterface from "./components/Pages/UserInterface";
+import Login from "./components/Pages/Login";
+import Register from "./components/Pages/Register";
+import Dashboard from "./components/Pages/DashBoard";
+import FilePreview from "./components/Pages/FilePreview";
+
+import Landing from "./components/Main/Landing";
+import File from "./components/Main/File";
+import Stat from "./components/Main/Stat";
+import User from "./components/Main/User";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
