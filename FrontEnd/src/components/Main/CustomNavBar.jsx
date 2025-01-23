@@ -90,7 +90,9 @@ export default function CustomNavBar() {
               px: 0,
             }}
           >
-            <SitemarkIcon strokeColor={strokeColor} />
+            <Link to="/">
+              <SitemarkIcon strokeColor={strokeColor} />
+            </Link>
             <CustomSearchBar />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <IconButton

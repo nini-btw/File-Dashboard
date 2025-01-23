@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 export function SitemarkIcon({ strokeColor }) {
   return (
-    <SvgIcon sx={{ height: 60, width: 100 }}>
+    <SvgIcon sx={{ height: 60, width: 100, cursor: "pointer" }}>
       <svg
         width="800px"
         height="800px"

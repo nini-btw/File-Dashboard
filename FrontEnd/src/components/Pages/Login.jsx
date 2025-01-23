@@ -15,6 +15,7 @@ import { styled } from "@mui/material/styles";
 import ForgotPassword from "../Sub/Registration/ForgotPassword";
 import { SitemarkIcon } from "../Sub/Registration/CustomIcons";
 import { useTheme } from "@mui/material/styles";
+import { Link as RouterLink } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -119,7 +120,9 @@ export default function Login() {
       <CssBaseline enableColorScheme />
       <SignInContainer direction="column" justifyContent="space-between">
         <Card variant="outlined" sx={{ borderRadius: "1rem" }}>
-          <SitemarkIcon strokeColor={strokeColor} />
+          <RouterLink to="/">
+            <SitemarkIcon strokeColor={strokeColor} />
+          </RouterLink>
           <Typography
             component="h1"
             variant="h4"
