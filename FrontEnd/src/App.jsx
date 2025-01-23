@@ -13,6 +13,8 @@ import Dashboard from "./components/DashBoard";
 import File from "./components/Sub/DashBoard/File";
 import Stat from "./components/Sub/DashBoard/Stat";
 import User from "./components/Sub/DashBoard/User";
+import FilePreview from "./components/Main/FilePreview";
+import Landing from "./components/Sub/Utilities/Landing";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -39,7 +41,10 @@ const App = () => {
       </Box>
       {/* Main Components */}
       <Routes>
-        <Route path="/" element={<UserInterface />} />
+        <Route path="/" element={<UserInterface />}>
+          <Route path="" element={<Landing />}></Route>
+          <Route path="file" element={<FilePreview />}></Route>
+        </Route>
         <Route path="/signIn" element={<Login />} />
         <Route path="/signUp" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />}>

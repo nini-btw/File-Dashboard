@@ -12,6 +12,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { PictureAsPdf } from "@mui/icons-material";
 import DescriptionIcon from "@mui/icons-material/Description";
+import { Link } from "react-router-dom";
 
 export default function AccordionComponent({ title }) {
   const theme = useTheme();
@@ -44,30 +45,34 @@ export default function AccordionComponent({ title }) {
             {accordionData[0].map((element, index) => {
               const isWord = element.toLowerCase().endsWith(".docx");
               return (
-                <ListItem
-                  key={index}
-                  sx={{
-                    backgroundColor: theme.palette.background.paper,
-                    paddingTop: "1rem",
-                    textAlign: "center",
-                    width: "100%", // Make sure each item takes full width
-                    display: "flex",
-                    justifyContent: "space-between",
-                    "&:hover": {
-                      cursor: "pointer",
-                      backgroundColor: theme.palette.background.default,
-                    },
-                  }}
-                >
-                  <Typography>{element}</Typography>
-                  <Typography>
-                    {isWord ? (
-                      <DescriptionIcon sx={{ color: "blue" }} />
-                    ) : (
-                      <PictureAsPdf sx={{ color: "red" }} />
-                    )}
-                  </Typography>
-                </ListItem>
+                <>
+                  <Link to="/file">
+                    <ListItem
+                      key={index}
+                      sx={{
+                        backgroundColor: theme.palette.background.paper,
+                        paddingTop: "1rem",
+                        textAlign: "center",
+                        width: "100%", // Make sure each item takes full width
+                        display: "flex",
+                        justifyContent: "space-between",
+                        "&:hover": {
+                          cursor: "pointer",
+                          backgroundColor: theme.palette.background.default,
+                        },
+                      }}
+                    >
+                      <Typography>{element}</Typography>
+                      <Typography>
+                        {isWord ? (
+                          <DescriptionIcon sx={{ color: "blue" }} />
+                        ) : (
+                          <PictureAsPdf sx={{ color: "red" }} />
+                        )}
+                      </Typography>
+                    </ListItem>
+                  </Link>
+                </>
               );
             })}
           </List>
