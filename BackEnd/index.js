@@ -11,24 +11,42 @@ const mongoose = require("mongoose");
 const url = process.env.DB_URL;
 const port = process.env.PORT;
 
-mongoose
-  .connect(url)
-  .then(() => {
-    console.log("MongoDB connected successfully");
-  })
-  .catch((error) => {
-    console.error("MongoDB connection error:", error);
-  });
-
-// Middleware
-app.use(cors());
-app.use(express.json());
+mongoose.connect(url).then(() => {
+  console.log("MongoDb connect Success");
+});
 
 // Routes
-const userRouter = require("./routes/user.route");
+const userRouter = require("./routes/userRoute");
 app.use("/api/users", userRouter);
+
+const courseRouter = require("./routes/course.route");
+app.use("/api/courses", courseRouter);
 
 // Starting the server
 app.listen(port, () => {
   console.log(`Listening on PORT ${port}`);
 });
+
+/* const { MongoClient } = require("mongodb");
+const url =
+  "mongodb+srv://denidenimohammed:nini0btw@filedbsm.op5mj.mongodb.net/?retryWrites=true&w=majority&appName=fileDBSM";
+
+const client = new MongoClient(url);
+
+const main = async () => {
+  await client.connect();
+  console.log("connected");
+  const db = client.db("FileBank");
+  const collection = db.collection("courses");
+
+  await collection.insertOne({
+    title: "third course",
+    price: 3000,
+  });
+
+  const data = await collection.find().toArray();
+  console.log("data:", data);
+};
+
+main();
+ */
