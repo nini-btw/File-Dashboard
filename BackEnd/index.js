@@ -19,9 +19,6 @@ mongoose.connect(url).then(() => {
 const userRouter = require("./routes/userRoute");
 app.use("/api/users", userRouter);
 
-const courseRouter = require("./routes/course.route");
-app.use("/api/courses", courseRouter);
-
 // Starting the server
 app.listen(port, () => {
   console.log(`Listening on PORT ${port}`);
