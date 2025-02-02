@@ -4,8 +4,8 @@ const httpStatusText = require("../utils/httpStatusText");
 const verifyToken = (req, res, next) => {
   const header = req.headers["Authorization"] || req.headers["authorization"];
   if (!header) {
-    const error = appError.create("Token required", 400, httpStatusText.E);
-    return next(error);
+    const err = new appError("Token Required", 404, httpStatusText.E);
+    return next(err);
   }
 
   token = header.split(" ")[1];
@@ -14,7 +14,7 @@ const verifyToken = (req, res, next) => {
     req.currentUser = decodedToken;
     next();
   } catch (err) {
-    const error = appError.create("Invalid Token", 400, httpStatusText.F);
+    const error = new appError("Invalid Token", 404, httpStatusText.F);
     return next(error);
   }
 };

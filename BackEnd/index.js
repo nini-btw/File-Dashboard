@@ -5,6 +5,9 @@ const cors = require("cors");
 // Creating the server
 const app = express();
 
+//applying middlewares
+app.use(express.json());
+
 // Connecting to the database
 require("dotenv").config();
 const mongoose = require("mongoose");
@@ -23,27 +26,3 @@ app.use("/api/users", userRouter);
 app.listen(port, () => {
   console.log(`Listening on PORT ${port}`);
 });
-
-/* const { MongoClient } = require("mongodb");
-const url =
-  "mongodb+srv://denidenimohammed:nini0btw@filedbsm.op5mj.mongodb.net/?retryWrites=true&w=majority&appName=fileDBSM";
-
-const client = new MongoClient(url);
-
-const main = async () => {
-  await client.connect();
-  console.log("connected");
-  const db = client.db("FileBank");
-  const collection = db.collection("courses");
-
-  await collection.insertOne({
-    title: "third course",
-    price: 3000,
-  });
-
-  const data = await collection.find().toArray();
-  console.log("data:", data);
-};
-
-main();
- */
