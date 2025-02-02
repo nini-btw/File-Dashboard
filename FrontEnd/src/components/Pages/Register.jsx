@@ -66,6 +66,16 @@ export default function Register() {
   const [nameError, setNameError] = useState(false);
   const [nameErrorMessage, setNameErrorMessage] = useState("");
 
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const theme = useTheme(); // Access the current theme
   const strokeColor = theme.palette.mode === "dark" ? "#fff" : "#000";
 
@@ -73,7 +83,7 @@ export default function Register() {
     const email = document.getElementById("email");
     const password = document.getElementById("password");
     const passwordConfirm = document.getElementById("passwordConfirm");
-    const name = document.getElementById("name");
+    const fullName = document.getElementById("fullName");
 
     let isValid = true;
 
@@ -104,7 +114,7 @@ export default function Register() {
       setPasswordCheckMessage("");
     }
 
-    if (!name.value || name.value.length < 1) {
+    if (!fullName.value || fullName.value.length < 1) {
       setNameError(true);
       setNameErrorMessage("Name is required.");
       isValid = false;
@@ -116,18 +126,29 @@ export default function Register() {
     return isValid;
   };
 
-  const handleSubmit = (event) => {
-    if (nameError || emailError || passwordError || passwordCheck) {
-      event.preventDefault();
-      return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/users/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Registration failed");
+      }
+
+      console.log("Registration successful:", data);
+    } catch (error) {
+      console.error("Registration failed:", error.message);
     }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get("name"),
-      lastName: data.get("lastName"),
-      email: data.get("email"),
-      password: data.get("password"),
-    });
   };
 
   return (
@@ -151,17 +172,18 @@ export default function Register() {
             sx={{ display: "flex", flexDirection: "column", gap: 1 }}
           >
             <FormControl>
-              <FormLabel htmlFor="name">Full name</FormLabel>
+              <FormLabel htmlFor="fullName">Full name</FormLabel>
               <TextField
-                autoComplete="name"
-                name="name"
+                autoComplete="fullName"
+                name="fullName"
                 required
                 fullWidth
-                id="name"
+                id="fullName"
                 placeholder="Jon Snow"
                 error={nameError}
                 helperText={nameErrorMessage}
                 color={nameError ? "error" : "primary"}
+                onChange={handleChange}
               />
             </FormControl>
             <FormControl>
@@ -177,6 +199,7 @@ export default function Register() {
                 error={emailError}
                 helperText={emailErrorMessage}
                 color={passwordError ? "error" : "primary"}
+                onChange={handleChange}
               />
             </FormControl>
             <FormControl>
@@ -193,6 +216,7 @@ export default function Register() {
                 error={passwordError}
                 helperText={passwordErrorMessage}
                 color={passwordError ? "error" : "primary"}
+                onChange={handleChange}
               />
             </FormControl>
             <FormControl>
