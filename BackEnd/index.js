@@ -7,6 +7,7 @@ const app = express();
 
 //applying middlewares
 app.use(express.json());
+app.use(cors());
 
 // Connecting to the database
 require("dotenv").config();
