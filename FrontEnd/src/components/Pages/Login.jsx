@@ -76,16 +76,42 @@ export default function Login() {
     setOpen(false);
   };
 
-  const handleSubmit = (event) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Validate inputs before submitting
+    if (!validateInputs()) {
       return;
     }
+
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const email = data.get("email");
+    const password = data.get("password");
+
+    try {
+      const response = await fetch("http://localhost:5000/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Login failed");
+      }
+
+      // Save the token to localStorage
+      localStorage.setItem("token", result.data.token);
+
+      // Redirect to the home page or dashboard
+    } catch (err) {
+      console.error("Login failed:", err.message);
+      setEmailError(true);
+      setEmailErrorMessage(err.message || "Invalid email or password");
+    }
   };
 
   const validateInputs = () => {

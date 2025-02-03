@@ -13,6 +13,7 @@ import { SitemarkIcon } from "../Sub/Registration/CustomIcons";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -62,7 +63,7 @@ export default function Register() {
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [passwordCheck, setPasswordCheck] = useState(false);
-  const [passwordCheckMessage, setPasswordCheckMessage] = useState(false);
+  const [passwordCheckMessage, setPasswordCheckMessage] = useState("");
   const [nameError, setNameError] = useState(false);
   const [nameErrorMessage, setNameErrorMessage] = useState("");
 
@@ -75,7 +76,7 @@ export default function Register() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  const navigate = useNavigate();
   const theme = useTheme(); // Access the current theme
   const strokeColor = theme.palette.mode === "dark" ? "#fff" : "#000";
 
@@ -104,10 +105,11 @@ export default function Register() {
       setPasswordError(false);
       setPasswordErrorMessage("");
     }
-    //Password Check
-    if (!passwordConfirm || password.value !== passwordConfirm.value) {
+
+    // Password Check
+    if (!passwordConfirm.value || password.value !== passwordConfirm.value) {
       setPasswordCheck(true);
-      setPasswordCheckMessage("Password not matched");
+      setPasswordCheckMessage("Passwords do not match.");
       isValid = false;
     } else {
       setPasswordCheck(false);
@@ -128,7 +130,21 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    // Validate inputs before submission
+    if (!validateInputs()) {
+      return; // Stop submission if validation fails
+    }
+
+    // Ensure passwords match before proceeding
+    const password = document.getElementById("password").value;
+    const passwordConfirm = document.getElementById("passwordConfirm").value;
+
+    if (password !== passwordConfirm) {
+      setPasswordCheck(true);
+      setPasswordCheckMessage("Passwords do not match.");
+      return; // Stop submission if passwords don't match
+    }
 
     try {
       const response = await fetch("http://localhost:5000/api/users/register", {
@@ -146,6 +162,7 @@ export default function Register() {
       }
 
       console.log("Registration successful:", data);
+      navigate("/");
     } catch (error) {
       console.error("Registration failed:", error.message);
     }
@@ -235,12 +252,7 @@ export default function Register() {
                 color={passwordCheck ? "error" : "primary"}
               />
             </FormControl>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              onClick={validateInputs}
-            >
+            <Button type="submit" fullWidth variant="contained">
               Register
             </Button>
           </Box>
