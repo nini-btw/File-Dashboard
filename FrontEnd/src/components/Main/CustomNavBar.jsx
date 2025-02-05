@@ -21,6 +21,9 @@ import Select from "@mui/material/Select";
 import { useState } from "react";
 import { Typography } from "@mui/material";
 import { MenuItem as DropdownItem } from "@mui/material";
+import { useSelector } from "react-redux";
+/* import { useEffect } from "react"; */
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -68,6 +71,10 @@ export default function CustomNavBar() {
     { name: "Type", values: ["Academic", "Non-Academic"] },
     { name: "Faculty", values: ["Engineering", "Arts", "Business"] },
   ];
+
+  //redux store
+  /* const dispatch = useDispatch(); */
+  const userState = useSelector((state) => state.user.login);
 
   return (
     <AppBar
@@ -159,26 +166,47 @@ export default function CustomNavBar() {
               </Box>
             )}
           </Box>
-          <Box
-            sx={{
-              display: { xs: "none", md: "flex" },
-              gap: 1,
-              alignItems: "center",
-            }}
-          >
-            <Link to="/signIn">
-              <Button
-                variant="text"
-                size="small"
-                sx={{
-                  color: (theme) => theme.palette.text.primary,
-                  backgroundColor: (theme) => theme.palette.background.paper,
-                }}
-              >
-                Sign in
-              </Button>
-            </Link>
-            <Link to="signUp">
+          {userState ? (
+            <Box
+              sx={{
+                display: { xs: "none", md: "flex" },
+                gap: 1,
+                alignItems: "center",
+              }}
+            >
+              <Link to="/signIn">
+                <Button
+                  variant="text"
+                  size="small"
+                  sx={{
+                    color: (theme) => theme.palette.text.primary,
+                    backgroundColor: (theme) => theme.palette.background.paper,
+                  }}
+                >
+                  Sign in
+                </Button>
+              </Link>
+              <Link to="signUp">
+                <Button
+                  variant="contained"
+                  size="small"
+                  sx={{
+                    backgroundColor: (theme) => theme.palette.background.accent,
+                    color: (theme) => theme.palette.text.accent,
+                  }}
+                >
+                  Sign up
+                </Button>
+              </Link>
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                display: { xs: "none", md: "flex" },
+                gap: 1,
+                alignItems: "center",
+              }}
+            >
               <Button
                 variant="contained"
                 size="small"
@@ -187,10 +215,17 @@ export default function CustomNavBar() {
                   color: (theme) => theme.palette.text.accent,
                 }}
               >
-                Sign up
+                Sign Out
               </Button>
-            </Link>
-          </Box>
+              <IconButton>
+                <AccountCircleIcon
+                  sx={{
+                    fontSize: "3rem",
+                  }}
+                />
+              </IconButton>
+            </Box>
+          )}
           <Box sx={{ display: { xs: "flex", md: "none" }, gap: 1 }}>
             <IconButton aria-label="Menu button" onClick={toggleDrawer(true)}>
               <MenuIcon />
@@ -248,42 +283,64 @@ export default function CustomNavBar() {
                     ))}
                   </Box>
                 )}
-
-                <MenuItem>
-                  <Box sx={{ width: "100%" }}>
-                    <Link to="signUp">
-                      <Button
-                        variant="contained"
-                        fullWidth
-                        sx={{
-                          backgroundColor: (theme) =>
-                            theme.palette.background.accent,
-                          color: (theme) => theme.palette.text.accent,
-                        }}
-                      >
-                        Sign up
-                      </Button>
-                    </Link>
+                {userState ? (
+                  <Box>
+                    <MenuItem>
+                      <Box sx={{ width: "100%" }}>
+                        <Link to="signUp">
+                          <Button
+                            variant="contained"
+                            fullWidth
+                            sx={{
+                              backgroundColor: (theme) =>
+                                theme.palette.background.accent,
+                              color: (theme) => theme.palette.text.accent,
+                            }}
+                          >
+                            Sign up
+                          </Button>
+                        </Link>
+                      </Box>
+                    </MenuItem>
+                    <MenuItem>
+                      <Box sx={{ width: "100%" }}>
+                        <Link to="/signIn">
+                          <Button
+                            variant="contained"
+                            borderColor="theme.pallete.background.accent"
+                            fullWidth
+                            sx={{
+                              color: (theme) => theme.palette.text.primary,
+                              backgroundColor: (theme) =>
+                                theme.palette.background.paper,
+                            }}
+                          >
+                            Sign in
+                          </Button>
+                        </Link>
+                      </Box>
+                    </MenuItem>
                   </Box>
-                </MenuItem>
-                <MenuItem>
-                  <Box sx={{ width: "100%" }}>
-                    <Link to="/signIn">
-                      <Button
-                        variant="contained"
-                        borderColor="theme.pallete.background.accent"
-                        fullWidth
-                        sx={{
-                          color: (theme) => theme.palette.text.primary,
-                          backgroundColor: (theme) =>
-                            theme.palette.background.paper,
-                        }}
-                      >
-                        Sign in
-                      </Button>
-                    </Link>
-                  </Box>
-                </MenuItem>
+                ) : (
+                  <MenuItem>
+                    <Box sx={{ width: "100%" }}>
+                      <Link to="/signIn">
+                        <Button
+                          variant="contained"
+                          borderColor="theme.pallete.background.accent"
+                          fullWidth
+                          sx={{
+                            backgroundColor: (theme) =>
+                              theme.palette.background.accent,
+                            color: (theme) => theme.palette.text.accent,
+                          }}
+                        >
+                          Sign Out
+                        </Button>
+                      </Link>
+                    </Box>
+                  </MenuItem>
+                )}
               </Box>
             </Drawer>
           </Box>
