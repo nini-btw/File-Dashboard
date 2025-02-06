@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
-import CustomTable from "../Sub/DashBoard//CustomTable";
+import CustomTable from "../Sub/DashBoard/CustomTable";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import for redirection
 
 function createData(id, user, userRole, email) {
   return {
@@ -21,40 +22,58 @@ const headCells = [
 
 function User() {
   const [rows, setRows] = useState([]);
+  const navigate = useNavigate(); // To redirect the user if not authorized
 
   useEffect(() => {
-    // Fetch data from the API
-    fetch("http://localhost:5000/api/users")
-      .then((response) => response.json())
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      // Redirect to login if no token is found
+      navigate("/login");
+      return;
+    }
+
+    // Fetch data from the API with Authorization header
+    fetch("http://localhost:5000/api/users", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`, // Add the Bearer token to the Authorization header
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unauthorized access");
+        }
+        return response.json();
+      })
       .then((json) => {
-        // Transform the fetched data into the desired format
         const transformedData = json.data.users.map((user, key) =>
           createData(key + 1, user.fullName, user.role, user.email)
         );
-        // Update the rows state with the transformed data
         setRows(transformedData);
       })
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
-
-  // Log the rows for debugging
-  console.log(rows);
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        // Redirect to login page if token is invalid or expired
+        navigate("/login");
+      });
+  }, [navigate]);
 
   return (
-    <>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "3rem",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <h1>Users Management </h1>
-        <CustomTable rows={rows} headCells={headCells} />
-      </Box>
-    </>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "3rem",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <h1>Users Management</h1>
+      <CustomTable rows={rows} headCells={headCells} />
+    </Box>
   );
 }
+
 export default User;

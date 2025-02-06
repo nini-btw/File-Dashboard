@@ -21,9 +21,11 @@ import Select from "@mui/material/Select";
 import { useState } from "react";
 import { Typography } from "@mui/material";
 import { MenuItem as DropdownItem } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 /* import { useEffect } from "react"; */
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../rtk/slice/userSlice";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -43,13 +45,14 @@ export default function CustomNavBar() {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme(); // Access the current theme
   const strokeColor = theme.palette.mode === "dark" ? "#fff" : "#000";
-
+  const navigate = useNavigate();
   const [filtersVisible, setFiltersVisible] = useState(false);
   const [filters, setFilters] = useState({
     year: "",
     type: "",
     faculty: "",
   });
+  const dispatch = useDispatch();
 
   const handleToggleFilters = () => {
     setFiltersVisible((prev) => !prev);
@@ -75,6 +78,11 @@ export default function CustomNavBar() {
   //redux store
   /* const dispatch = useDispatch(); */
   const userState = useSelector((state) => state.user.login);
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+    dispatch(login(false));
+    navigate("/");
+  };
 
   return (
     <AppBar
@@ -166,7 +174,7 @@ export default function CustomNavBar() {
               </Box>
             )}
           </Box>
-          {userState ? (
+          {!userState ? (
             <Box
               sx={{
                 display: { xs: "none", md: "flex" },
@@ -214,6 +222,7 @@ export default function CustomNavBar() {
                   backgroundColor: (theme) => theme.palette.background.accent,
                   color: (theme) => theme.palette.text.accent,
                 }}
+                onClick={handleSignOut}
               >
                 Sign Out
               </Button>
@@ -283,7 +292,7 @@ export default function CustomNavBar() {
                     ))}
                   </Box>
                 )}
-                {userState ? (
+                {!userState ? (
                   <Box>
                     <MenuItem>
                       <Box sx={{ width: "100%" }}>

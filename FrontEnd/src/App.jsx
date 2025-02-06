@@ -18,6 +18,7 @@ import Landing from "./components/Main/Landing";
 import File from "./components/Main/File";
 import Stat from "./components/Main/Stat";
 import User from "./components/Main/User";
+import ProtectedRoute from "./components/Main/ProtectedRoute";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -53,7 +54,14 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<Stat />}></Route>
           <Route path="files" element={<File />} />
-          <Route path="users" element={<User />} />
+          <Route
+            path="users"
+            element={
+              <ProtectedRoute>
+                <User />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </ThemeProvider>

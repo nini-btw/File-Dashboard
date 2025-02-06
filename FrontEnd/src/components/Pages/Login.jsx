@@ -16,6 +16,8 @@ import ForgotPassword from "../Sub/Registration/ForgotPassword";
 import { SitemarkIcon } from "../Sub/Registration/CustomIcons";
 import { useTheme } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../rtk/slice/userSlice";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -67,6 +69,7 @@ export default function Login() {
 
   const theme = useTheme(); // Access the current theme
   const strokeColor = theme.palette.mode === "dark" ? "#fff" : "#000";
+  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -105,6 +108,7 @@ export default function Login() {
 
       // Save the token to localStorage
       localStorage.setItem("token", result.data.token);
+      dispatch(login(true));
 
       // Redirect to the home page or dashboard
     } catch (err) {
