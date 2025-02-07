@@ -78,6 +78,7 @@ export default function CustomNavBar() {
   //redux store
   /* const dispatch = useDispatch(); */
   const userState = useSelector((state) => state.user.login);
+  const userRole = useSelector((state) => state.user.role);
   const handleSignOut = () => {
     localStorage.removeItem("token");
     dispatch(login(false));
@@ -215,6 +216,23 @@ export default function CustomNavBar() {
                 alignItems: "center",
               }}
             >
+              {userRole === "editor" ? (
+                <Link to="/dashboard">
+                  <Button
+                    variant="text"
+                    size="small"
+                    sx={{
+                      color: (theme) => theme.palette.text.accent,
+                      backgroundColor: (theme) =>
+                        theme.palette.background.accent,
+                    }}
+                  >
+                    DashBoard
+                  </Button>
+                </Link>
+              ) : (
+                ""
+              )}
               <Button
                 variant="contained"
                 size="small"

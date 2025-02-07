@@ -17,7 +17,7 @@ import { SitemarkIcon } from "../Sub/Registration/CustomIcons";
 import { useTheme } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../../rtk/slice/userSlice";
+import { login, setRole } from "../../rtk/slice/userSlice";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
@@ -122,6 +122,7 @@ export default function Login() {
         navigate("/");
       }
 
+      dispatch(setRole(userRole));
       dispatch(login(true));
 
       // Redirect to the home page or dashboard
