@@ -1,21 +1,28 @@
 const jwt = require("jsonwebtoken");
-const appError = require("../utils/AppError");
 const httpStatusText = require("../utils/httpStatusText");
+
 const verifyToken = (req, res, next) => {
   const header = req.headers["Authorization"] || req.headers["authorization"];
+
   if (!header) {
-    const err = new appError("Token Required", 404, httpStatusText.E);
-    return next(err);
+    const error = AppError.create("Token Required", 404, httpStatusText.F);
+    return next(error);
   }
 
-  token = header.split(" ")[1];
+  const token = header.split(" ")[1]; // Properly declare the token variable
+
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_KEY);
+
     req.currentUser = decodedToken;
+
+    const userRole = decodedToken.role;
+    console.log("User role:", userRole);
+
     next();
   } catch (err) {
-    const error = new appError("Invalid Token", 404, httpStatusText.F);
-    return next(error);
+    const error = AppError.create("Invalid Token", 404, httpStatusText.F);
+    return next(error); // Proceed to error handling middleware
   }
 };
 

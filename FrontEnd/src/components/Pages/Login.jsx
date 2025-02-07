@@ -18,6 +18,8 @@ import { useTheme } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../rtk/slice/userSlice";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -66,6 +68,7 @@ export default function Login() {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const theme = useTheme(); // Access the current theme
   const strokeColor = theme.palette.mode === "dark" ? "#fff" : "#000";
@@ -108,6 +111,18 @@ export default function Login() {
 
       // Save the token to localStorage
       localStorage.setItem("token", result.data.token);
+
+      const decodedToken = jwtDecode(result.data.token);
+      const userRole = decodedToken.role;
+
+      if (userRole === "admin" || userRole === "editor") {
+        // Redirect to dashboard
+        navigate("/dashboard");
+      } else {
+        // Redirect to home or other page
+        navigate("/");
+      }
+
       dispatch(login(true));
 
       // Redirect to the home page or dashboard
