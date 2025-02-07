@@ -3,7 +3,7 @@ const User = require("../model/userModel");
 const asyncWrapper = require("../middleware/asyncWrapper");
 const httpStatusText = require("../utils/httpStatusText");
 const jwtGenerator = require("../utils/jwtGenerator");
-const AppError = require("../utils/appError");
+const AppError = require("../utils/AppError");
 
 const getAllUsers = asyncWrapper(async (req, res, next) => {
   const users = await User.find(

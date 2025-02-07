@@ -116,7 +116,6 @@ export default function Login() {
       const userRole = decodedToken.role;
 
       if (userRole === "admin" || userRole === "editor") {
-        // Redirect to dashboard
         navigate("/dashboard");
       } else {
         // Redirect to home or other page

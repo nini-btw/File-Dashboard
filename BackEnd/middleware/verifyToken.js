@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const httpStatusText = require("../utils/httpStatusText");
+const AppError = require("../utils/AppError");
 
 const verifyToken = (req, res, next) => {
   const header = req.headers["Authorization"] || req.headers["authorization"];
@@ -17,7 +18,6 @@ const verifyToken = (req, res, next) => {
     req.currentUser = decodedToken;
 
     const userRole = decodedToken.role;
-    console.log("User role:", userRole);
 
     next();
   } catch (err) {
