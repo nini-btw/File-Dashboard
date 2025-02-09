@@ -6,6 +6,8 @@ import { lightTheme, darkTheme } from "./theme";
 import ContrastIcon from "@mui/icons-material/Contrast";
 import { Box } from "@mui/material";
 import "./main.sass";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 //components
 import UserInterface from "./components/Pages/UserInterface";

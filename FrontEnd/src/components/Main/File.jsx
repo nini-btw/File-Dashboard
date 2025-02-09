@@ -1,5 +1,7 @@
 import { Box } from "@mui/material";
 import CustomTable from "../Sub/DashBoard/CustomTable";
+import { useSelector } from "react-redux";
+import Add from "../crud/Add";
 
 function createData(id, fileName, uploadDate, by, viewCounts) {
   return {
@@ -61,6 +63,7 @@ const headCells = [
 ];
 
 function File() {
+  const display = useSelector((state) => state.overlay.display);
   return (
     <>
       <Box
@@ -75,6 +78,7 @@ function File() {
         <h1>Files Management </h1>
         <CustomTable rows={rows} headCells={headCells} />
       </Box>
+      {display && <Add />}
     </>
   );
 }

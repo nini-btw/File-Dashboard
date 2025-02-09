@@ -6,9 +6,17 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import AddIcon from "@mui/icons-material/Add";
+import { Box } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { setDisplay } from "../../../rtk/slice/overlaySlice";
 
 export default function EnhancedTableToolbar(props) {
   const { numSelected } = props;
+  const dispatch = useDispatch();
+  const handleOverlay = () => {
+    dispatch(setDisplay(true));
+  };
   return (
     <Toolbar
       sx={[
@@ -44,11 +52,19 @@ export default function EnhancedTableToolbar(props) {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
+        <Box
+          className="d-flex align-items-center justify-content-between"
+          sx={{ width: "100%" }}
+        >
+          <Tooltip title="Filter list">
+            <IconButton>
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+          <IconButton onClick={handleOverlay}>
+            <AddIcon />
           </IconButton>
-        </Tooltip>
+        </Box>
       )}
     </Toolbar>
   );
