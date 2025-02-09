@@ -7,7 +7,7 @@ const userRole = require("../utils/userRole");
 
 router
   .route("/")
-  .get(verifyToken, allowedTo(userRole.E), userController.getAllUsers);
+  .get(/* verifyToken, allowedTo(userRole.E), */ userController.getAllUsers);
 router.route("/login").post(userController.login);
 router.route("/register").post(userController.register);
 

@@ -22,17 +22,7 @@ mongoose.connect(url).then(() => {
 
 // Routes
 const userRouter = require("./routes/userRoute");
-const { message } = require("./utils/appError");
 app.use("/api/users", userRouter);
-
-app.use((error, req, res, next) => {
-  res.status(error.statusCode || 500).json({
-    status: error.httpStatusText || httpStatusText.E,
-    message: error.message,
-    code: error.statusCode || 500,
-    data: null,
-  });
-});
 
 // Starting the server
 app.listen(port, () => {
