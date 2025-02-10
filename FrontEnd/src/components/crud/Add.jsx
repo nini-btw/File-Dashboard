@@ -15,6 +15,14 @@ export default function Add() {
       {
         <Box className="overlay">
           <Box className="overlay-content">
+            <form action="">
+              <label htmlFor=""></label>
+              <input type="text" />
+              <label htmlFor=""></label>
+              <input type="text" />
+              <label htmlFor=""></label>
+              <input type="text" />
+            </form>
             <IconButton onClick={handleDisplay}>
               <CancelIcon />
             </IconButton>
